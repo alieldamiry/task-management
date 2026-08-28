@@ -44,7 +44,11 @@ export const TasksFilters = () => {
           }
         >
           <SelectTrigger id="filter-status" className="w-40">
-            <SelectValue placeholder="Any status" />
+            <SelectValue placeholder="Any status">
+              {(value: string | null) =>
+                value ? STATUS_LABELS[value] : "Any status"
+              }
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={null}>Any status</SelectItem>
@@ -66,7 +70,11 @@ export const TasksFilters = () => {
           }
         >
           <SelectTrigger id="filter-priority" className="w-40">
-            <SelectValue placeholder="Any priority" />
+            <SelectValue placeholder="Any priority">
+              {(value: string | null) =>
+                value ? PRIORITY_LABELS[value] : "Any priority"
+              }
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={null}>Any priority</SelectItem>
