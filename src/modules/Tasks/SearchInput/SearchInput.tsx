@@ -8,7 +8,7 @@ import {
 
 export const SearchInput = () => {
   return (
-    <InputGroup className="max-w-xs">
+    <InputGroup className="max-w-xs my-2">
       <InputGroupInput placeholder="Search..." />
       <InputGroupAddon>
         <Search />
