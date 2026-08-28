@@ -17,3 +17,12 @@ export type NewTask = {
   priority: TaskPriority
   dueDate: string
 }
+
+export type UpdateTask = {
+  id: number
+  title: string
+  description: string
+  priority: TaskPriority
+  status: TaskStatus
+  dueDate: string
+}

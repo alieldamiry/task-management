@@ -1,6 +1,6 @@
 import { http, HttpResponse, delay } from "msw"
 
-import type { NewTask, Task } from "@/modules/Tasks/types"
+import type { NewTask, Task, UpdateTask } from "@/modules/Tasks/types"
 
 import { tasks } from "./data/tasks"
 
@@ -27,5 +27,22 @@ export const handlers = [
     tasks.push(newTask)
 
     return HttpResponse.json(newTask, { status: 201 })
+  }),
+
+  http.patch("/api/tasks/:id", async ({ request, params }) => {
+    await delay(500)
+
+    const id = Number(params.id)
+    const task = tasks.find((task) => task.id === id)
+
+    if (!task) {
+      return HttpResponse.json({ message: "Task not found" }, { status: 404 })
+    }
+
+    const body = (await request.json()) as Partial<Omit<UpdateTask, "id">>
+
+    Object.assign(task, body)
+
+    return HttpResponse.json(task)
   }),
 ]
