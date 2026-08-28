@@ -1,4 +1,5 @@
 import { X } from "lucide-react"
+import { useLocation } from "react-router"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -32,34 +33,38 @@ const PRIORITY_LABELS: Record<string, string> = {
 
 export const TasksFilters = () => {
   const { filters, setFilter, clearFilters, hasActiveFilters } = useTaskFilters()
+  const { pathname } = useLocation()
+  const isKanbanView = pathname === "/kanban"
 
   return (
     <div className="flex flex-wrap items-end gap-3 py-2">
-      <div className="flex flex-col gap-1">
-        <Label htmlFor="filter-status">Status</Label>
-        <Select
-          value={filters.status ?? null}
-          onValueChange={(value: string | null) =>
-            setFilter("status", value ?? undefined)
-          }
-        >
-          <SelectTrigger id="filter-status" className="w-40">
-            <SelectValue placeholder="Any status">
-              {(value: string | null) =>
-                value ? STATUS_LABELS[value] : "Any status"
-              }
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value={null}>Any status</SelectItem>
-            {TASK_STATUSES.map((status) => (
-              <SelectItem key={status} value={status}>
-                {STATUS_LABELS[status]}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      {!isKanbanView && (
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="filter-status">Status</Label>
+          <Select
+            value={filters.status ?? null}
+            onValueChange={(value: string | null) =>
+              setFilter("status", value ?? undefined)
+            }
+          >
+            <SelectTrigger id="filter-status" className="w-40">
+              <SelectValue placeholder="Any status">
+                {(value: string | null) =>
+                  value ? STATUS_LABELS[value] : "Any status"
+                }
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={null}>Any status</SelectItem>
+              {TASK_STATUSES.map((status) => (
+                <SelectItem key={status} value={status}>
+                  {STATUS_LABELS[status]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
       <div className="flex flex-col gap-1">
         <Label htmlFor="filter-priority">Priority</Label>
