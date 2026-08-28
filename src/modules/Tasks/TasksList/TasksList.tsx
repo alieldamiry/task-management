@@ -1,16 +1,18 @@
 import { useState } from "react"
-import { SquarePen } from "lucide-react"
+import { SquarePen, Trash2 } from "lucide-react"
 
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import type { Task } from "@/modules/Tasks/types"
 import { EditTaskModal } from "@/modules/Tasks/EditTaskModal"
+import { DeleteTaskModal } from "@/modules/Tasks/DeleteTaskModal"
 import { useTasks } from "./useTasks"
 
 export const TasksList = () => {
     const { data: tasks = [], isPending, isError, error } = useTasks()
     const [editingTask, setEditingTask] = useState<Task | null>(null)
+    const [deletingTask, setDeletingTask] = useState<Task | null>(null)
 
     return (
         <>
@@ -52,14 +54,24 @@ export const TasksList = () => {
                             <TableCell>{task.priority}</TableCell>
                             <TableCell>{task.dueDate}</TableCell>
                             <TableCell>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => setEditingTask(task)}
-                                    aria-label={`Edit ${task.title}`}
-                                >
-                                    <SquarePen />
-                                </Button>
+                                <div className="flex items-center gap-1">
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setEditingTask(task)}
+                                        aria-label={`Edit ${task.title}`}
+                                    >
+                                        <SquarePen />
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setDeletingTask(task)}
+                                        aria-label={`Delete ${task.title}`}
+                                    >
+                                        <Trash2 />
+                                    </Button>
+                                </div>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -71,6 +83,14 @@ export const TasksList = () => {
                 open={editingTask !== null}
                 onOpenChange={(open) => {
                     if (!open) setEditingTask(null)
+                }}
+            />
+
+            <DeleteTaskModal
+                task={deletingTask}
+                open={deletingTask !== null}
+                onOpenChange={(open) => {
+                    if (!open) setDeletingTask(null)
                 }}
             />
         </>

@@ -45,4 +45,19 @@ export const handlers = [
 
     return HttpResponse.json(task)
   }),
+
+  http.delete("/api/tasks/:id", async ({ params }) => {
+    await delay(500)
+
+    const id = Number(params.id)
+    const index = tasks.findIndex((task) => task.id === id)
+
+    if (index === -1) {
+      return HttpResponse.json({ message: "Task not found" }, { status: 404 })
+    }
+
+    tasks.splice(index, 1)
+
+    return new HttpResponse(null, { status: 204 })
+  }),
 ]
