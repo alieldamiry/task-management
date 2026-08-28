@@ -2,7 +2,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Spinner } from "@/components/ui/spinner"
 import { EditTaskModal } from "@/modules/Tasks/EditTaskModal"
 import { DeleteTaskModal } from "@/modules/Tasks/DeleteTaskModal"
-import { useTasks } from "./useTasks"
+import { useTasks } from "@/hooks/tasks"
 
 export const TasksList = () => {
     const { data: tasks = [], isPending, isError, error } = useTasks()

@@ -9,9 +9,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import type { Task } from "@/modules/Tasks/types"
+import type { Task } from "@/types/task"
+import { useDeleteTask } from "@/hooks/tasks"
 
-import { useDeleteTask } from "./useDeleteTask"
 import { Trash2 } from "lucide-react"
 import { useState } from "react"
 

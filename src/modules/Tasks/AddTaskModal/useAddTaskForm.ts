@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
+import { useCreateTask } from "@/hooks/tasks"
+
 import type { AddTaskFormValues, UseAddTaskFormOptions } from "./AddTaskModal.interface"
 import { addTaskSchema } from "./AddTaskModal.schema"
-import { useCreateTask } from "./useCreateTask"
 
 export const useAddTaskForm = ({ onSubmitSuccess }: UseAddTaskFormOptions = {}) => {
   const form = useForm<AddTaskFormValues>({

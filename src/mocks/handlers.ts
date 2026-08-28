@@ -1,6 +1,6 @@
 import { http, HttpResponse, delay } from "msw"
 
-import type { NewTask, Task, UpdateTask } from "@/modules/Tasks/types"
+import type { NewTask, Task, UpdateTask } from "@/types/task"
 
 import { tasks } from "./data/tasks"
 

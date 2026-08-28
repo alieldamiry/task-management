@@ -1,6 +1,6 @@
 import type { z } from "zod"
 
-import type { Task } from "@/modules/Tasks/types"
+import type { Task } from "@/types/task"
 
 import type { editTaskSchema } from "./EditTaskModal.schema"
 

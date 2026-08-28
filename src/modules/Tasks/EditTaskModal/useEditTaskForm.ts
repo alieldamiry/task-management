@@ -1,14 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import type { Task } from "@/modules/Tasks/types"
+import type { Task } from "@/types/task"
+import { useUpdateTask } from "@/hooks/tasks"
 
 import type {
   EditTaskFormValues,
   UseEditTaskFormOptions,
 } from "./EditTaskModal.interface"
 import { editTaskSchema } from "./EditTaskModal.schema"
-import { useUpdateTask } from "./useUpdateTask"
 
 const toFormValues = (task: Task): EditTaskFormValues => ({
   title: task.title,
