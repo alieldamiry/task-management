@@ -7,27 +7,26 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import type { Task } from "@/modules/Tasks/types"
 
 import { useDeleteTask } from "./useDeleteTask"
+import { Trash2 } from "lucide-react"
+import { useState } from "react"
 
 type DeleteTaskModalProps = {
   task: Task | null
-  open: boolean
-  onOpenChange: (open: boolean) => void
 }
 
 export const DeleteTaskModal = ({
   task,
-  open,
-  onOpenChange,
 }: DeleteTaskModalProps) => {
   const { mutateAsync, isPending, isError, error, reset } = useDeleteTask()
-
+const [open, setOpen] = useState(false)
   const handleOpenChange = (next: boolean) => {
     if (!next) reset()
-    onOpenChange(next)
+    setOpen(next)
   }
 
   const handleDelete = async () => {
@@ -35,7 +34,7 @@ export const DeleteTaskModal = ({
 
     try {
       await mutateAsync(task.id)
-      onOpenChange(false)
+      setOpen(false)
       reset()
     } catch {
       // error surfaced via isError
@@ -44,6 +43,14 @@ export const DeleteTaskModal = ({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger render={
+        <Button
+          variant="ghost"
+          size="sm"
+        >
+          <Trash2 className="text-destructive" />
+        </Button>
+      }></DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold">
@@ -51,7 +58,7 @@ export const DeleteTaskModal = ({
           </DialogTitle>
           <DialogDescription>
             Are you sure you want to delete
-            {task ? ` "${task.title}"` : " this task"}? This action cannot be
+            {task ? <span className="font-bold"> "{task.title}" </span> : "this task"}? This action cannot be
             undone.
           </DialogDescription>
         </DialogHeader>

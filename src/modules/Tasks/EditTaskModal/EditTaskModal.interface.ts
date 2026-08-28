@@ -10,3 +10,12 @@ export type UseEditTaskFormOptions = {
   task: Task
   onSubmitSuccess?: () => void
 }
+
+export type EditTaskModalProps = {
+  task: Task | null
+}
+
+export type EditTaskFormProps = {
+  task: Task
+  onSubmitSuccess: () => void
+}

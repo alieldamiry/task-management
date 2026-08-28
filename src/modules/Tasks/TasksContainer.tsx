@@ -12,10 +12,9 @@ export const TasksContainer = () => {
         <h1 className="text-2xl font-bold">Task Management</h1>
         <div>Toggle View</div>
       </div>
-      <div className="flex items-center justify-between py-4">
+      <div className="flex items-center flex-wrap justify-between py-4">
         <SearchInput />
         <AddTaskModal />
-
       </div>
       <TasksList />
     </Container>
