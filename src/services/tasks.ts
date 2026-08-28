@@ -1,7 +1,11 @@
-import type { NewTask, Task, UpdateTask } from "@/types/task"
+import type { NewTask, Task, TaskPriority, TaskStatus, UpdateTask } from "@/types/task"
 
 export type TaskFilters = {
   search?: string
+  status?: TaskStatus
+  priority?: TaskPriority
+  dueFrom?: string
+  dueTo?: string
 }
 
 export async function getTasks(filters?: TaskFilters): Promise<Task[]> {
@@ -9,6 +13,22 @@ export async function getTasks(filters?: TaskFilters): Promise<Task[]> {
 
   if (filters?.search) {
     query.set("search", filters.search)
+  }
+
+  if (filters?.status) {
+    query.set("status", filters.status)
+  }
+
+  if (filters?.priority) {
+    query.set("priority", filters.priority)
+  }
+
+  if (filters?.dueFrom) {
+    query.set("dueFrom", filters.dueFrom)
+  }
+
+  if (filters?.dueTo) {
+    query.set("dueTo", filters.dueTo)
   }
 
   const queryString = query.toString()

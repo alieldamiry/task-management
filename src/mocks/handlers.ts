@@ -8,14 +8,36 @@ export const handlers = [
   http.get("/api/tasks", async ({ request }) => {
     await delay(500)
 
-    const search = new URL(request.url).searchParams
-      .get("search")
-      ?.trim()
-      .toLowerCase()
+    const params = new URL(request.url).searchParams
+    const search = params.get("search")?.trim().toLowerCase()
+    const status = params.get("status")?.trim()
+    const priority = params.get("priority")?.trim()
+    const dueFrom = params.get("dueFrom")?.trim()
+    const dueTo = params.get("dueTo")?.trim()
 
-    const result = search
-      ? tasks.filter((task) => task.title.toLowerCase().includes(search))
-      : tasks
+    const result = tasks.filter((task) => {
+      if (search && !task.title.toLowerCase().includes(search)) {
+        return false
+      }
+
+      if (status && task.status !== status) {
+        return false
+      }
+
+      if (priority && task.priority !== priority) {
+        return false
+      }
+
+      if (dueFrom && task.dueDate < dueFrom) {
+        return false
+      }
+
+      if (dueTo && task.dueDate > dueTo) {
+        return false
+      }
+
+      return true
+    })
 
     return HttpResponse.json(result)
   }),

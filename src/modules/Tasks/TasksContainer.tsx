@@ -1,6 +1,7 @@
 import { Container } from '@/components/container/container'
 import { SearchInput } from '@/modules/Tasks/SearchInput/SearchInput'
 import { AddTaskModal } from '@/modules/Tasks/AddTaskModal'
+import { TasksFilters } from '@/modules/Tasks/TasksFilters'
 import { TasksList } from './TasksList/TasksList'
 
 
@@ -16,6 +17,7 @@ export const TasksContainer = () => {
         <SearchInput />
         <AddTaskModal />
       </div>
+      <TasksFilters />
       <TasksList />
     </Container>
   )

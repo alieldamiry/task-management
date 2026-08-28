@@ -2,16 +2,13 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Spinner } from "@/components/ui/spinner"
 import { EditTaskModal } from "@/modules/Tasks/EditTaskModal"
 import { DeleteTaskModal } from "@/modules/Tasks/DeleteTaskModal"
-import { useSearchParams } from "react-router"
+import { useTaskFilters } from "@/modules/Tasks/TasksFilters"
 
 import { useTasks } from "@/hooks/tasks"
 
 export const TasksList = () => {
-    const [searchParams] = useSearchParams()
-    const search = searchParams.get("search") ?? ""
-    const { data: tasks = [], isPending, isError, error } = useTasks(
-        search ? { search } : undefined,
-    )
+    const { filters } = useTaskFilters()
+    const { data: tasks = [], isPending, isError, error } = useTasks(filters)
 
     return (
         <>
