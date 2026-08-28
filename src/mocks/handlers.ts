@@ -5,9 +5,19 @@ import type { NewTask, Task, UpdateTask } from "@/types/task"
 import { tasks } from "./data/tasks"
 
 export const handlers = [
-  http.get("/api/tasks", async () => {
+  http.get("/api/tasks", async ({ request }) => {
     await delay(500)
-    return HttpResponse.json(tasks)
+
+    const search = new URL(request.url).searchParams
+      .get("search")
+      ?.trim()
+      .toLowerCase()
+
+    const result = search
+      ? tasks.filter((task) => task.title.toLowerCase().includes(search))
+      : tasks
+
+    return HttpResponse.json(result)
   }),
 
   http.post("/api/tasks", async ({ request }) => {

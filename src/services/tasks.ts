@@ -1,7 +1,20 @@
 import type { NewTask, Task, UpdateTask } from "@/types/task"
 
-export async function getTasks(): Promise<Task[]> {
-  const response = await fetch("/api/tasks")
+export type TaskFilters = {
+  search?: string
+}
+
+export async function getTasks(filters?: TaskFilters): Promise<Task[]> {
+  const query = new URLSearchParams()
+
+  if (filters?.search) {
+    query.set("search", filters.search)
+  }
+
+  const queryString = query.toString()
+  const response = await fetch(
+    `/api/tasks${queryString ? `?${queryString}` : ""}`,
+  )
 
   if (!response.ok) {
     throw new Error(`Failed to fetch tasks (${response.status})`)
