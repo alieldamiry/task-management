@@ -10,3 +10,10 @@ export interface Task {
   status: TaskStatus
   dueDate: string
 }
+
+export type NewTask = {
+  title: string
+  description: string
+  priority: TaskPriority
+  dueDate: string
+}

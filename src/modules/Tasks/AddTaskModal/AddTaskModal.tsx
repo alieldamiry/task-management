@@ -28,9 +28,10 @@ import { useAddTaskForm } from "./useAddTaskForm"
 
 export const AddTaskModal = () => {
   const [open, setOpen] = useState(false)
-  const { register, control, errors, onSubmit } = useAddTaskForm({
-    onSubmitSuccess: () => setOpen(false),
-  })
+  const { register, control, errors, onSubmit, isSubmitting, submitError } =
+    useAddTaskForm({
+      onSubmitSuccess: () => setOpen(false),
+    })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -120,12 +121,24 @@ export const AddTaskModal = () => {
             )}
           </div>
 
+          {submitError && (
+            <p className="text-sm text-destructive">{submitError.message}</p>
+          )}
+
           <DialogFooter>
-            <DialogClose render={<Button variant="outline" type="button" />}>
+            <DialogClose
+              render={
+                <Button variant="outline" type="button" disabled={isSubmitting} />
+              }
+            >
               Cancel
             </DialogClose>
-            <Button type="submit" className="text-white">
-              Save Task
+            <Button
+              type="submit"
+              className="text-white"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Saving..." : "Save Task"}
             </Button>
           </DialogFooter>
         </form>

@@ -10,7 +10,6 @@ import { handlers } from "./handlers"
  */
 export async function enableMocking() {
   const worker = setupWorker(...handlers)
-console.log(import.meta.env.BASE_URL)
   return worker.start({
     onUnhandledRequest: "bypass",
     serviceWorker: {
