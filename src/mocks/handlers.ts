@@ -5,9 +5,41 @@ import type { NewTask, Task, UpdateTask } from "@/types/task"
 import { tasks } from "./data/tasks"
 
 export const handlers = [
-  http.get("/api/tasks", async () => {
+  http.get("/api/tasks", async ({ request }) => {
     await delay(500)
-    return HttpResponse.json(tasks)
+
+    const params = new URL(request.url).searchParams
+    const search = params.get("search")?.trim().toLowerCase()
+    const status = params.get("status")?.trim()
+    const priority = params.get("priority")?.trim()
+    const dueFrom = params.get("dueFrom")?.trim()
+    const dueTo = params.get("dueTo")?.trim()
+
+    const result = tasks.filter((task) => {
+      if (search && !task.title.toLowerCase().includes(search)) {
+        return false
+      }
+
+      if (status && task.status !== status) {
+        return false
+      }
+
+      if (priority && task.priority !== priority) {
+        return false
+      }
+
+      if (dueFrom && task.dueDate < dueFrom) {
+        return false
+      }
+
+      if (dueTo && task.dueDate > dueTo) {
+        return false
+      }
+
+      return true
+    })
+
+    return HttpResponse.json(result)
   }),
 
   http.post("/api/tasks", async ({ request }) => {

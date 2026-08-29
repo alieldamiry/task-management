@@ -2,10 +2,17 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Spinner } from "@/components/ui/spinner"
 import { EditTaskModal } from "@/modules/Tasks/EditTaskModal"
 import { DeleteTaskModal } from "@/modules/Tasks/DeleteTaskModal"
+import { useTaskFilters } from "@/modules/Tasks/TasksFilters"
+import {
+  TASK_PRIORITY_LABELS,
+  TASK_STATUS_LABELS,
+} from "@/constants/tasks"
+
 import { useTasks } from "@/hooks/tasks"
 
 export const TasksList = () => {
-    const { data: tasks = [], isPending, isError, error } = useTasks()
+    const { filters } = useTaskFilters()
+    const { data: tasks = [], isPending, isError, error } = useTasks(filters)
 
     return (
         <>
@@ -43,8 +50,8 @@ export const TasksList = () => {
                         <TableRow key={task.id}>
                             <TableCell className="font-medium">{task.id}</TableCell>
                             <TableCell className="font-medium">{task.title}</TableCell>
-                            <TableCell>{task.status.split("_").join(" ")}</TableCell>
-                            <TableCell>{task.priority}</TableCell>
+                            <TableCell>{TASK_STATUS_LABELS[task.status]}</TableCell>
+                            <TableCell>{TASK_PRIORITY_LABELS[task.priority]}</TableCell>
                             <TableCell>{task.dueDate}</TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-1">

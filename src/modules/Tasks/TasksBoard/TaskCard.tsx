@@ -1,0 +1,74 @@
+import type { CSSProperties, Ref } from "react"
+import { CalendarDays, GripVertical } from "lucide-react"
+
+import { TASK_PRIORITY_BADGE_STYLES } from "@/constants/tasks"
+import { cn } from "@/lib/utils"
+import { EditTaskModal } from "@/modules/Tasks/EditTaskModal"
+import { DeleteTaskModal } from "@/modules/Tasks/DeleteTaskModal"
+import type { Task } from "@/types/task"
+
+type TaskCardProps = {
+  task: Task
+  dragging?: boolean
+  cardRef?: Ref<HTMLDivElement>
+  style?: CSSProperties
+  handleRef?: Ref<HTMLButtonElement>
+}
+
+export const TaskCard = ({
+  task,
+  dragging,
+  cardRef,
+  handleRef,
+}: TaskCardProps) => (
+  <div
+    ref={cardRef}
+    className={cn(
+      "rounded-lg border border-border bg-card p-3 shadow-xs",
+      dragging && "shadow-lg ring-1 ring-primary/30",
+    )}
+  >
+    <div className="flex items-start justify-between gap-2">
+      <div className="flex min-w-0 items-start gap-1.5">
+        {handleRef && (
+          <button
+            ref={handleRef}
+            type="button"
+            aria-label="Drag task"
+            className="-ml-1 mt-0.5 cursor-grab touch-none text-muted-foreground hover:text-foreground"
+          >
+            <GripVertical className="size-4" />
+          </button>
+        )}
+        <p className="text-sm font-medium leading-snug">{task.title}</p>
+      </div>
+      <div className="-mr-1 -mt-1 flex shrink-0 items-center">
+        <EditTaskModal task={task} />
+        <DeleteTaskModal task={task} />
+      </div>
+    </div>
+
+    {task.description && (
+      <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+        {task.description}
+      </p>
+    )}
+
+    <div className="mt-3 flex items-center justify-between gap-2">
+      <span
+        className={cn(
+          "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium capitalize",
+          TASK_PRIORITY_BADGE_STYLES[task.priority],
+        )}
+      >
+        {task.priority}
+      </span>
+      {task.dueDate && (
+        <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+          <CalendarDays className="size-3.5" />
+          {task.dueDate}
+        </span>
+      )}
+    </div>
+  </div>
+)
