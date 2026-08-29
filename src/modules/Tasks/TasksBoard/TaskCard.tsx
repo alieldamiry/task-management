@@ -1,16 +1,11 @@
 import type { CSSProperties, Ref } from "react"
 import { CalendarDays, GripVertical } from "lucide-react"
 
+import { TASK_PRIORITY_BADGE_STYLES } from "@/constants/tasks"
 import { cn } from "@/lib/utils"
 import { EditTaskModal } from "@/modules/Tasks/EditTaskModal"
 import { DeleteTaskModal } from "@/modules/Tasks/DeleteTaskModal"
-import type { Task, TaskPriority } from "@/types/task"
-
-const PRIORITY_STYLES: Record<TaskPriority, string> = {
-  low: "border-transparent bg-muted text-muted-foreground",
-  medium: "border-transparent bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300",
-  high: "border-transparent bg-red-100 text-red-800 dark:bg-red-500/15 dark:text-red-300",
-}
+import type { Task } from "@/types/task"
 
 type TaskCardProps = {
   task: Task
@@ -63,7 +58,7 @@ export const TaskCard = ({
       <span
         className={cn(
           "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium capitalize",
-          PRIORITY_STYLES[task.priority],
+          TASK_PRIORITY_BADGE_STYLES[task.priority],
         )}
       >
         {task.priority}

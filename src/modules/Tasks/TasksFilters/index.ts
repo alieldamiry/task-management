@@ -1,2 +1,2 @@
 export * from "./TasksFilters"
-export * from "./useTaskFilters"
+export { useTaskFilters } from "./useTaskFilters"

@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { TASK_PRIORITIES, TASK_PRIORITY_LABELS } from "@/constants/tasks"
 
 import { useAddTaskForm } from "./useAddTaskForm"
 
@@ -92,9 +93,11 @@ export const AddTaskModal = () => {
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
+                    {TASK_PRIORITIES.map((priority) => (
+                      <SelectItem key={priority} value={priority}>
+                        {TASK_PRIORITY_LABELS[priority]}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               )}

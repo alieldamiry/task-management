@@ -1,17 +1,9 @@
 import { useCallback, useMemo } from "react"
 import { useSearchParams } from "react-router"
 
+import { TASK_PRIORITIES, TASK_STATUSES } from "@/constants/tasks"
 import type { TaskFilters } from "@/services/tasks"
 import type { TaskPriority, TaskStatus } from "@/types/task"
-
-export const TASK_STATUSES: TaskStatus[] = [
-  "to_do",
-  "in_progress",
-  "in_review",
-  "done",
-]
-
-export const TASK_PRIORITIES: TaskPriority[] = ["low", "medium", "high"]
 
 const isStatus = (value: string | null): value is TaskStatus =>
   !!value && (TASK_STATUSES as string[]).includes(value)

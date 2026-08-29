@@ -14,22 +14,14 @@ import {
 
 import {
   TASK_PRIORITIES,
+  TASK_PRIORITY_LABELS,
+  TASK_STATUS_LABELS,
   TASK_STATUSES,
-  useTaskFilters,
-} from "./useTaskFilters"
+} from "@/constants/tasks"
 
-const STATUS_LABELS: Record<string, string> = {
-  to_do: "To do",
-  in_progress: "In progress",
-  in_review: "In review",
-  done: "Done",
-}
+import type { TaskPriority, TaskStatus } from "@/types/task"
 
-const PRIORITY_LABELS: Record<string, string> = {
-  low: "Low",
-  medium: "Medium",
-  high: "High",
-}
+import { useTaskFilters } from "./useTaskFilters"
 
 export const TasksFilters = () => {
   const { filters, setFilter, clearFilters, hasActiveFilters } = useTaskFilters()
@@ -49,8 +41,8 @@ export const TasksFilters = () => {
           >
             <SelectTrigger id="filter-status" className="w-40">
               <SelectValue placeholder="Any status">
-                {(value: string | null) =>
-                  value ? STATUS_LABELS[value] : "Any status"
+                {(value: TaskStatus | null) =>
+                  value ? TASK_STATUS_LABELS[value] : "Any status"
                 }
               </SelectValue>
             </SelectTrigger>
@@ -58,7 +50,7 @@ export const TasksFilters = () => {
               <SelectItem value={null}>Any status</SelectItem>
               {TASK_STATUSES.map((status) => (
                 <SelectItem key={status} value={status}>
-                  {STATUS_LABELS[status]}
+                  {TASK_STATUS_LABELS[status]}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -76,8 +68,8 @@ export const TasksFilters = () => {
         >
           <SelectTrigger id="filter-priority" className="w-40">
             <SelectValue placeholder="Any priority">
-              {(value: string | null) =>
-                value ? PRIORITY_LABELS[value] : "Any priority"
+              {(value: TaskPriority | null) =>
+                value ? TASK_PRIORITY_LABELS[value] : "Any priority"
               }
             </SelectValue>
           </SelectTrigger>
@@ -85,7 +77,7 @@ export const TasksFilters = () => {
             <SelectItem value={null}>Any priority</SelectItem>
             {TASK_PRIORITIES.map((priority) => (
               <SelectItem key={priority} value={priority}>
-                {PRIORITY_LABELS[priority]}
+                {TASK_PRIORITY_LABELS[priority]}
               </SelectItem>
             ))}
           </SelectContent>

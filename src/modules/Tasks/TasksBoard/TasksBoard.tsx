@@ -2,7 +2,8 @@ import { DragDropProvider } from "@dnd-kit/react"
 import type { DragEndEvent } from "@dnd-kit/react"
 
 import { Spinner } from "@/components/ui/spinner"
-import { TASK_STATUSES, useTaskFilters } from "@/modules/Tasks/TasksFilters"
+import { TASK_STATUSES } from "@/constants/tasks"
+import { useTaskFilters } from "@/modules/Tasks/TasksFilters"
 import { useTasks, useUpdateTask } from "@/hooks/tasks"
 import type { Task, TaskStatus } from "@/types/task"
 

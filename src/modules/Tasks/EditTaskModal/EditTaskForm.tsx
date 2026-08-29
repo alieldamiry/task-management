@@ -6,6 +6,12 @@ import { Controller } from "react-hook-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { DialogClose, DialogFooter } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import {
+  TASK_PRIORITIES,
+  TASK_PRIORITY_LABELS,
+  TASK_STATUS_LABELS,
+  TASK_STATUSES,
+} from "@/constants/tasks"
 import type { EditTaskFormProps } from "./EditTaskModal.interface"
 
 export const EditTaskForm = ({ task, onSubmitSuccess }: EditTaskFormProps) => {
@@ -54,9 +60,11 @@ export const EditTaskForm = ({ task, onSubmitSuccess }: EditTaskFormProps) => {
                 <SelectValue placeholder="Select priority" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="low">Low</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="high">High</SelectItem>
+                {TASK_PRIORITIES.map((priority) => (
+                  <SelectItem key={priority} value={priority}>
+                    {TASK_PRIORITY_LABELS[priority]}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           )}
@@ -77,10 +85,11 @@ export const EditTaskForm = ({ task, onSubmitSuccess }: EditTaskFormProps) => {
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="to_do">To do</SelectItem>
-                <SelectItem value="in_progress">In progress</SelectItem>
-                <SelectItem value="in_review">In review</SelectItem>
-                <SelectItem value="done">Done</SelectItem>
+                {TASK_STATUSES.map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {TASK_STATUS_LABELS[status]}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           )}
