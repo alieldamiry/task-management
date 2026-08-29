@@ -38,7 +38,7 @@ export const AddTaskModal = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
-          <Button className="text-white">
+          <Button>
             <Plus />
             Add Task
           </Button>
@@ -138,7 +138,6 @@ export const AddTaskModal = () => {
             </DialogClose>
             <Button
               type="submit"
-              className="text-white"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Saving..." : "Save Task"}

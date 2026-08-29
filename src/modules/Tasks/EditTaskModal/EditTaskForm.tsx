@@ -124,7 +124,7 @@ export const EditTaskForm = ({ task, onSubmitSuccess }: EditTaskFormProps) => {
         >
           Cancel
         </DialogClose>
-        <Button type="submit" className="text-white" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Saving..." : "Save Changes"}
         </Button>
       </DialogFooter>
