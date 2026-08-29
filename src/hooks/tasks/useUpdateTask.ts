@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { toast } from "react-toastify"
 
 import { updateTask } from "@/services/tasks"
 import type { Task } from "@/types/task"
@@ -16,7 +17,6 @@ export const useUpdateTask = () => {
       const snapshot = queryClient.getQueriesData<Task[]>({
         queryKey: taskKeys.all,
       })
-      console.log("snapshot", snapshot)
 
       queryClient.setQueriesData<Task[]>({ queryKey: taskKeys.all }, (tasks) =>
         tasks?.map((task) =>
@@ -26,10 +26,14 @@ export const useUpdateTask = () => {
 
       return { snapshot }
     },
-    onError: (_error, _updated, context) => {
+    onSuccess: () => {
+      toast.success("Task updated")
+    },
+    onError: (error, _updated, context) => {
       context?.snapshot.forEach(([key, tasks]) => {
         queryClient.setQueryData(key, tasks)
       })
+      toast.error(error.message || "Failed to update task")
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: taskKeys.all })
