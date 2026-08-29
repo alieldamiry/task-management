@@ -1,4 +1,5 @@
-import { CalendarDays } from "lucide-react"
+import type { CSSProperties, Ref } from "react"
+import { CalendarDays, GripVertical } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { EditTaskModal } from "@/modules/Tasks/EditTaskModal"
@@ -13,12 +14,39 @@ const PRIORITY_STYLES: Record<TaskPriority, string> = {
 
 type TaskCardProps = {
   task: Task
+  dragging?: boolean
+  cardRef?: Ref<HTMLDivElement>
+  style?: CSSProperties
+  handleRef?: Ref<HTMLButtonElement>
 }
 
-export const TaskCard = ({ task }: TaskCardProps) => (
-  <div className="rounded-lg border border-border bg-card p-3 shadow-xs">
+export const TaskCard = ({
+  task,
+  dragging,
+  cardRef,
+  handleRef,
+}: TaskCardProps) => (
+  <div
+    ref={cardRef}
+    className={cn(
+      "rounded-lg border border-border bg-card p-3 shadow-xs",
+      dragging && "shadow-lg ring-1 ring-primary/30",
+    )}
+  >
     <div className="flex items-start justify-between gap-2">
-      <p className="text-sm font-medium leading-snug">{task.title}</p>
+      <div className="flex min-w-0 items-start gap-1.5">
+        {handleRef && (
+          <button
+            ref={handleRef}
+            type="button"
+            aria-label="Drag task"
+            className="-ml-1 mt-0.5 cursor-grab touch-none text-muted-foreground hover:text-foreground"
+          >
+            <GripVertical className="size-4" />
+          </button>
+        )}
+        <p className="text-sm font-medium leading-snug">{task.title}</p>
+      </div>
       <div className="-mr-1 -mt-1 flex shrink-0 items-center">
         <EditTaskModal task={task} />
         <DeleteTaskModal task={task} />
